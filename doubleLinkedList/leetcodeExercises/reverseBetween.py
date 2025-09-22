@@ -2,9 +2,10 @@ class Node:
     def __init__(self, value):
         self.value = value
         self.next = None
+        self.prev = None
 
 
-class LinkedList:
+class DoublyLinkedList:
     def __init__(self, value):
         new_node = Node(value)
         self.head = new_node
@@ -19,6 +20,7 @@ class LinkedList:
             while current.next is not None:
                 current = current.next
             current.next = new_node
+            new_node.prev = current
         self.length += 1
         return True
 
@@ -41,6 +43,7 @@ class LinkedList:
             return None
         dummy_node = Node(0)
         dummy_node.next = self.head
+        self.head.prev = dummy_node
         prev = dummy_node
 
         for _ in range(start_index):
@@ -49,56 +52,55 @@ class LinkedList:
 
         for _ in range(end_index - start_index):
             to_move = current.next
+
             current.next = to_move.next
+            if to_move.next:
+                to_move.next.prev = current
+
             to_move.next = prev.next
+            prev.next.prev = to_move
             prev.next = to_move
+            to_move.prev = prev
+
         self.head = dummy_node.next
+        self.head.prev = None
 
 
-linked_list = LinkedList(1)
-linked_list.append(2)
-linked_list.append(3)
-linked_list.append(4)
-linked_list.append(5)
+# Test Cases
+print("\nTest 1: Middle segment reversal")
+dll1 = DoublyLinkedList(3)
+for v in [8, 5, 10, 2, 1]:
+    dll1.append(v)
+print("BEFORE: ", end="")
+dll1.print_list()
+dll1.reverse_between(1, 4)
+print("AFTER:  ", end="")
+dll1.print_list()
 
-print("Original linked list: ")
-linked_list.print_list()
+print("\nTest 2: Full list reversal")
+dll2 = DoublyLinkedList(1)
+for v in [2, 3, 4, 5]:
+    dll2.append(v)
+print("BEFORE: ", end="")
+dll2.print_list()
+dll2.reverse_between(0, 4)
+print("AFTER:  ", end="")
+dll2.print_list()
 
-# Reverse a sublist within the linked list
-linked_list.reverse_between(2, 4)
-print("Reversed sublist (2, 4): ")
-linked_list.print_list()
+print("\nTest 3: No-op on single node")
+dll3 = DoublyLinkedList(9)
+print("BEFORE: ", end="")
+dll3.print_list()
+dll3.reverse_between(0, 0)
+print("AFTER:  ", end="")
+dll3.print_list()
 
-# Reverse another sublist within the linked list
-linked_list.reverse_between(0, 4)
-print("Reversed entire linked list: ")
-linked_list.print_list()
-
-# Reverse a sublist of length 1 within the linked list
-linked_list.reverse_between(3, 3)
-print("Reversed sublist of length 1 (3, 3): ")
-linked_list.print_list()
-
-# Reverse an empty linked list
-empty_list = LinkedList(0)
-empty_list.make_empty()
-empty_list.reverse_between(0, 0)
-print("Reversed empty linked list: ")
-empty_list.print_list()
-
-
-"""
-    EXPECTED OUTPUT:
-    ----------------
-    Original linked list: 
-    1 -> 2 -> 3 -> 4 -> 5 -> None
-    Reversed sublist (2, 4): 
-    1 -> 2 -> 5 -> 4 -> 3 -> None
-    Reversed entire linked list: 
-    3 -> 4 -> 5 -> 2 -> 1 -> None
-    Reversed sublist of length 1 (3, 3): 
-    3 -> 4 -> 5 -> 2 -> 1 -> None
-    Reversed empty linked list: 
-    Empty -> None
-    
-"""
+print("\nTest 4: Reversal with head involved")
+dll4 = DoublyLinkedList(7)
+for v in [8, 9]:
+    dll4.append(v)
+print("BEFORE: ", end="")
+dll4.print_list()
+dll4.reverse_between(0, 2)
+print("AFTER:  ", end="")
+dll4.print_list()
