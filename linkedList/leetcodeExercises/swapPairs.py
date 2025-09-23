@@ -51,30 +51,6 @@ class LinkedList:
             prev = first
             first = first.next
         self.head = dummy_node.next
-        #   +===================================================+
-        #   |               WRITE YOUR CODE HERE                |
-        #   | Description:                                      |
-        #   | - Swaps adjacent pairs of nodes in a singly linked|
-        #   |   list by modifying the next pointers.            |
-        #   |                                                   |
-        #   | Parameters:                                       |
-        #   | - None: Operates on the linked list's head.       |
-        #   |                                                   |
-        #   | Return:                                           |
-        #   | - None: Modifies the linked list in place.        |
-        #   |                                                   |
-        #   | Behavior:                                         |
-        #   | - If the list is empty or has one node, no swaps  |
-        #   |   are performed.                                  |
-        #   | - For each pair of adjacent nodes, swaps their    |
-        #   |   positions by updating the next pointers.        |
-        #   | - Uses a dummy node to simplify handling of the   |
-        #   |   head node swap.                                 |
-        #   | - Iterates through the list using a first pointer,|
-        #   |   keeping the head unchanged until the final      |
-        #   |   update.                                         |
-        #   | - Sets the head to the new first node at the end. |
-        #   +===================================================+
 
 
 # Test case 1: Swapping pairs in a list with an even number of nodes (1->2->3->4)
